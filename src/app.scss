@@ -1,0 +1,28 @@
+$theme-color: #dddddd;
+$primary-color: #20A0FF;
+$success-color: #13CE66;
+$warning-color: #F7BA2A;
+$danger-color: #FF4949;
+$black-color: #1F2D3D;
+$grey-color: #D3DCE6;
+$sliver-color: #8492A6;
+$white-color: #FFFFFF;
+
+@mixin clean-float {
+    overflow: hidden;
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+    zoom: 1;
+}
+
+@mixin routing {
+  animation: rotate 2s linear 0s infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
