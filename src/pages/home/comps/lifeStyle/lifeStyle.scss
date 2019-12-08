@@ -1,0 +1,25 @@
+.lifestyle-grid {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-color: #ffffff;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas: 'a b c d' 'e f g h';
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &__brf {
+    font-size: 30px;
+    color: #475669;
+    margin-bottom: 3px;
+  }
+  &__title {
+    font-size: 20px;
+    color: #99A9BF;
+  }
+}

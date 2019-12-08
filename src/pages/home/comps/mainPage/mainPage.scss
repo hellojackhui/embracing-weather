@@ -1,0 +1,129 @@
+.main-page {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 75vh;
+  &__topbar {
+    position: relative;
+    width: 100%;
+    padding: 25px 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: white;
+  }
+  &__location {
+    padding: 0 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__locicon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    background-image: url('../../../../assets/icons/location.png');
+    background-size: cover;
+    background-position: center;
+  }
+  &__seticon {
+    position: absolute;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background-image: url('../../../../assets/icons/setting.png');
+    background-size: cover;
+    background-position: center;
+  }
+  &__air {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 10%;
+    left: 20px;
+    padding: 10px 30px;
+    background: pink;
+    font-size: 0px;
+    border-radius: 15px;
+    color: #ffffff;
+  }
+  &__airnum {
+    font-size: 22px;
+  }
+  &__airtext {
+    font-size: 25px;
+  }
+  &__tips {
+    position: absolute;
+    top: 11%;
+    right: 0;
+    padding: 10px 15px 10px 25px;
+    background: #443636;
+    border-radius: 18% / 50% 0 0 50%;
+    color: #ffffff;
+    font-size: 25px;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 8%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: yellow;
+    }
+  }
+  &__data {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+  }
+  &__temprature {
+    position: relative;
+    font-size: 90px;
+    &::after {
+      content: 'o';
+      position: absolute;
+      right: -15px;
+      font-size: 30px;
+    }
+  }
+  &__weathertype {
+    font-size: 45px;
+    margin-bottom: 10px;
+  }
+  &__detailinfo {
+    height: 40px;
+    width: 150px;
+    font-size: 30rpx;
+    margin: 3px 0;
+    text-align: center;
+  }
+  &__detailItem {
+    height: 100%;
+  }
+  &__friendlytext {
+    position: absolute;
+    top: 75%;
+    width: 100%;
+    padding: 5px 3px;
+    text-align: center;
+    color: #ffffff;
+  }
+}

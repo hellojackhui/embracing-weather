@@ -8,7 +8,7 @@ const get = (url = '', params = {}) => {
       url,
       method: 'GET'
     }).then((response) => {
-      resolve(response)
+      resolve(response.data)
     }).catch((err) => {
       reject(err)
     })

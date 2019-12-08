@@ -1,4 +1,4 @@
-const combineUrl = (url, params) => {
+export const combineUrl = (url, params) => {
   let path = '';
   for (let key in params) {
     path += `&${key}=${params[key]}`
@@ -10,10 +10,4 @@ const combineUrl = (url, params) => {
     url = `${url}?${path}`;
   }
   return url;
-}
-
-
-
-export default {
-  combineUrl,
 }
