@@ -41,10 +41,10 @@
 		"nervjs": "^1.5.6",
 		"redux": "^4.0.0",
 		"redux-logger": "^3.0.6",
-		"redux-thunk": "^2.3.0",
-		"@antv/f2": "^3.4.4"
+		"redux-thunk": "^2.3.0"
 	},
 	"devDependencies": {
+		"@antv/f2": "^3.4.4",
 		"@tarojs/plugin-babel": "1.3.27",
 		"@tarojs/plugin-csso": "1.3.27",
 		"@tarojs/plugin-sass": "1.3.27",
@@ -66,6 +66,7 @@
 		"eslint-plugin-taro": "1.3.27",
 		"stylelint": "^12.0.0",
 		"stylelint-config-taro-rn": "1.3.27",
-		"stylelint-taro-rn": "1.3.27"
+		"stylelint-taro-rn": "1.3.27",
+		"taro-f2": "^2.2.0"
 	}
 }

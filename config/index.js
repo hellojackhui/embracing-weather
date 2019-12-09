@@ -65,11 +65,15 @@ const config = {
           }
         }
       }
-    }
+    },
+    compile: {
+      include: ['taro-f2']
+    },
   },
   h5: {
     publicPath: '/',
     staticDirectory: 'static',
+    esnextModules: ['taro-f2'],
     module: {
       postcss: {
         autoprefixer: {
