@@ -1,15 +1,16 @@
 import Taro, {Component} from '@tarojs/taro';
 import HttpUtils from '../../../../utils/httpUtils';
 import Toast from '../../../../utils/tools'
-import {heweatherLifestyleUrl ,heweatherkey} from '../../../../config/index'
+import {heweatherLifestyleUrl ,heweatherkey} from '../../../../config/index';
 import { View, Swiper, SwiperItem } from '@tarojs/components';
+import Modal from '../../../../components/modal/index';
 import './lifeStyle.scss'
 
 export default class LifeStyle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {}
+      data: {},
     }
   }
 
@@ -76,10 +77,11 @@ export default class LifeStyle extends Component {
 
   detail = (item) => {
     let title = this.typeTotext(item.type)
-    Taro.showModal({
-      title: `${title}指数`,
-      content: `${item.txt}`
-    })
+    let content = {
+      title,
+      text: item.txt
+    }
+    this.props.detail(content)
   }
 
   render() {

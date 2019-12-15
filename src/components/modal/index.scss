@@ -1,0 +1,22 @@
+.modal-bg {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba($color: #000000, $alpha: 0.4);
+  .modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    transition: all 0.4s linear;
+    opacity: 1;
+  }
+}
+.is-visible {
+  opacity: 1;
+}
+.is-show {
+  opacity: 0;
+}

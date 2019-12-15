@@ -1,3 +1,4 @@
+@import "~taro-ui/dist/style/components/modal.scss";
 .lifestyle-grid {
   position: relative;
   width: 100%;
@@ -7,6 +8,8 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-template-areas: 'a b c d' 'e f g h';
+  column-gap: 1px;
+  row-gap: 1px;
   &__item {
     display: flex;
     flex-direction: column;

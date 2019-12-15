@@ -1,18 +1,40 @@
 import Taro, {Component} from '@tarojs/taro';
-import HttpUtils from '../../../../utils/httpUtils';
-import Toast from '../../../../utils/tools'
-import {heweatherForecastUrl, heweatherkey} from '../../../../config/index'
-import './detail.scss'
-import { View, Text, Image } from '@tarojs/components';
+import './slider.scss'
+import { View, Text, Image, ScrollView } from '@tarojs/components';
 import cloud from '../../../../assets/icons/duoyun.png';
+import {mock} from '../../../../mock/mock';
 
-export default class Slider extends Component {
+export default class Myslider extends Component {
   constructor(props) {
     super(props)
   }
+  componentDidMount() {
+    
+  }
   render() {
+    let main = mock['HeWeather6'][0];
+    let graph = main['hourly'].slice(0,14);
     return (
-      <View>123</View>
+      <View className="slider">
+        <ScrollView
+          style={{'height': '150px'}}
+          scrollY={true}
+          scrollWithAnimation
+          className="scrollview"
+        >
+          {
+            graph.map((item, index) => {
+              return (
+                <View key={`${item.cloud}-${index}`} className="slider-scrollview__item" style={{height: '150px'}}>
+                  <Text className="slider-scrollview__time">{(item.time).substr(6)}</Text>
+                  <Image className="slider-scrollview__img" src={cloud}/>
+                  <Text className="slider-scrollview__title">{item.tmp}</Text>
+                </View>
+              )
+            })
+          }
+        </ScrollView>
+      </View>
     )
   }
 }

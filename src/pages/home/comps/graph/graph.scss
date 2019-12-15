@@ -1,9 +1,79 @@
 .graph {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 400px;
+  height: 800px;
   padding: 10px;
+  box-sizing: border-box;
+  background: white;
+  margin: 20px 0;
+  &__top {
+    display: flex;
+    width: 100%;
+    height: 180px;
+    flex-direction: row;
+    align-items: center;
+    &-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      height: 100%;
+    }
+    &-txt {
+      font-size: 23px;
+      color: #99A9BF;
+      margin-bottom: 5px;
+
+    }
+    &-title {
+      font-size: 26px;
+      color: #475669;
+    }
+    &-img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  &__bottom {
+    display: flex;
+    width: 100%;
+    height: 180px;
+    flex-direction: row;
+    align-items: center;
+    &-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      height: 100%;
+    }
+    &-txt {
+      font-size: 23px;
+      color: #99A9BF;
+      margin-bottom: 5px;
+
+    }
+    &-title {
+      font-size: 26px;
+      color: #475669;
+    }
+    &-img {
+      width: 40px;
+      height: 40px;
+    }
+    &-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .is-top {
+        margin-bottom: 2px;
+      }
+    }
+  }
 }
