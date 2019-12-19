@@ -73,13 +73,18 @@ export default class MainPage extends Component {
       })
     }
 
+    goAboutPage = () => {
+      Taro.navigateTo({
+        url: 'pages/about/index'
+      })
+    }
+
     render() {
       let {weatherData, airData, setting} = this.state
       let nowdata = weatherData.now
       let detail = [];
       detail.push(`${nowdata && nowdata['wind_dir'] || '北风'} ${nowdata && nowdata['wind_sc'] || 0}级`)
       detail.push(`湿度 ${nowdata && nowdata['hum']}%`)
-      console.log(detail)
       return (
         <View className='main-page' style={{
             backgroundImage: `url("${img}")`
@@ -89,7 +94,7 @@ export default class MainPage extends Component {
                 <View className='main-page__locicon'></View>
                 <Text className='main-page__loctext'>{weatherData.basic.location}</Text>
             </View>
-            <View className='main-page__seticon'></View>
+            <View className='main-page__seticon' onClick={this.goAboutPage}></View>
             {/* <View className='main-page__screenicon'></View> */}
             {
               setting && (

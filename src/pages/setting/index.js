@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import {View} from '@tarojs/components'
+import {View, Switch, Progress} from '@tarojs/components'
 
 
 export default class Setting extends Component {
@@ -8,7 +8,15 @@ export default class Setting extends Component {
   }
   render() {
     return (
-      <View>setting page</View>
+      <View className="setting">
+        <View className="setting-list">
+          
+        </View>
+        <View className="setting-list"></View>
+        <View className="setting-list"></View>
+        <View className="setting-list"></View>
+        <View className="setting-list"></View>
+      </View>
     )
   }
 }
