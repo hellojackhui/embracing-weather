@@ -1,14 +1,18 @@
 .slider {
   position: relative;
   background-color: white;
+  display: flex;
+  flex-direction: row;
   margin: 20px 0;
   &-scrollview {
-    width: 100%;
     font-weight: 400;
-    height: 150px;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
     white-space: nowrap;
     &__item {
       width: 120px;
+      height: 150px;
       display: flex;
       flex-direction: column;
       align-items: center;

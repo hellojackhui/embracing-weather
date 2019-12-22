@@ -8,10 +8,9 @@ import {
   Image
 } from '@tarojs/components';
 import search from '../../assets/icons/search.png';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './index.scss';
-
-export default class SearchBar extends Component {
+class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,3 +70,5 @@ SearchBar.defaultProps = {
   onChange: () => {},
   onToggle: () => {},
 }
+
+export default SearchBar;

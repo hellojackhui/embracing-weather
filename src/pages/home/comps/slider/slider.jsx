@@ -16,12 +16,7 @@ export default class Myslider extends Component {
     let graph = main['hourly'].slice(0,14);
     return (
       <View className="slider">
-        <ScrollView
-          style={{'height': '150px'}}
-          scrollY={true}
-          scrollWithAnimation
-          className="scrollview"
-        >
+        <View className="slider-scrollview">
           {
             graph.map((item, index) => {
               return (
@@ -33,7 +28,7 @@ export default class Myslider extends Component {
               )
             })
           }
-        </ScrollView>
+        </View>
       </View>
     )
   }

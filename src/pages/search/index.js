@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import {View} from '@tarojs/components'
-import SearchBar from '../../components/search-bar/index';
+import {View, Text} from '@tarojs/components'
+import SearchBar from '../../components/index';
 import CityList from '../../components/city-list/index';
 import { AtTag } from 'taro-ui'
 
@@ -9,10 +9,19 @@ export default class Search extends Component {
     super(props);
     this.state = {
       text: 'hello',
-      currentList: [],
-      historyList: [],
-      cityList: [],
-      sceneList: [],
+      type: 'his',
+      currentList: [{
+        name: 'xian'
+      }],
+      historyList: [{
+        name: 'xian'
+      }],
+      cityList: [{
+        name: 'xian'
+      }],
+      sceneList: [{
+        name: 'xian'
+      }],
     }
   }
 
@@ -24,7 +33,7 @@ export default class Search extends Component {
     console.log(val)
   }
 
-  searchListToggle = (type) => {
+  onToggle = (type) => {
     console.log(type);
     this.setState({
       type,
@@ -36,13 +45,12 @@ export default class Search extends Component {
   }
 
   render() {
-    let {cityList, historyList, currentList, sceneList} = this.state;
+    let {cityList, historyList, currentList, sceneList, type} = this.state;
     return (
       <View className="search">
         <SearchBar
           onChange={this.getListData}
           onFocus={this.onToggle}
-          onToggle={this.searchListToggle}
         />
         {
           type == 'list' && (
@@ -60,8 +68,8 @@ export default class Search extends Component {
                 <Text className="search-title">当前定位</Text>
                 <View className="search-title__list">
                   {
-                    historyList.map((item) => {
-                      <AtTag>{item}</AtTag>
+                    historyList.map((item, index) => {
+                      <AtTag key={index}>{item.name}</AtTag>
                     })
                   }
                 </View>
@@ -70,8 +78,8 @@ export default class Search extends Component {
                 <Text className="search-title">历史记录</Text>
                 <View className="search-title__list">
                   {
-                    currentList.map((item) => {
-                      <AtTag>{item}</AtTag>
+                    currentList.map((item, index) => {
+                      <AtTag key={index}>{item.name}</AtTag>
                     })
                   }
                 </View>
@@ -80,8 +88,8 @@ export default class Search extends Component {
                 <Text className="search-title">热门城市</Text>
                 <View className="search-title__list">
                   {
-                    cityList.map((item) => {
-                      <AtTag>{item}</AtTag>
+                    cityList.map((item, index) => {
+                      <AtTag key={index}>{item.name}</AtTag>
                     })
                   }
                 </View>
@@ -90,8 +98,8 @@ export default class Search extends Component {
                 <Text className="search-title">热门景区</Text>
                 <View className="search-title__list">
                   {
-                    sceneList.map((item) => {
-                      <AtTag>{item}</AtTag>
+                    sceneList.map((item, index) => {
+                      <AtTag key={index}>{item.name}</AtTag>
                     })
                   }
                 </View>

@@ -21,6 +21,7 @@ export default class CityList extends Component {
   }
 
   render() {
+    let {list} = this.state;
     return (
       <View className="city-list">
         <ScrollView

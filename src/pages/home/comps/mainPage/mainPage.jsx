@@ -13,6 +13,7 @@ export default class MainPage extends Component {
         weatherData: {},
         airData: {},
         setting: false,
+        detailVisible: false,
       }
     }
     componentDidMount() {
@@ -75,7 +76,13 @@ export default class MainPage extends Component {
 
     goAboutPage = () => {
       Taro.navigateTo({
-        url: 'pages/about/index'
+        url: '/pages/about/index'
+      })
+    }
+
+    showAirDetail = () => {
+      this.setState({
+        detailVisible: true,
       })
     }
 
@@ -102,7 +109,7 @@ export default class MainPage extends Component {
               )
             }
           </View>
-          <View className='main-page__air'>
+          <View className='main-page__air' onTouchStart={this.showAirDetail}>
             <Text className='main-page__airnum'>{airData.air_now_city.aqi}</Text>
             <Text className='main-page__airtext'>{airData.air_now_city.qlty}</Text>
           </View>
