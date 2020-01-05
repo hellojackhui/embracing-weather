@@ -5,6 +5,8 @@ import Detail from './comps/detail/detail';
 import LifeStyle from './comps/lifeStyle/lifeStyle';
 import Graph from './comps/graph/graph';
 import Myslider from './comps/slider/slider';
+import Airdetail from '../../components/AirDetail/index';
+import classnames from 'classnames';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
 import './index.scss';
 
@@ -16,6 +18,15 @@ export default class Home extends Component {
       content: {
         title: '',
         text: '',
+      },
+      detailVisible: false,
+      air_now_station: {
+        pm10: '',
+        pm25: '',
+        no2: '',
+        so2: '',
+        co: '',
+        o3: '',
       }
     }
   }
@@ -23,6 +34,18 @@ export default class Home extends Component {
   }
   componentWillReceiveProps(props) {
     console.log(props)
+  }
+
+  showDetailVisible = (data) => {
+    this.setState({
+      detailVisible: true,
+    })
+  }
+
+  onclose = () => {
+    this.setState({
+      detailVisible: false,
+    })
   }
 
   modalDetail = (data) => {
@@ -39,10 +62,10 @@ export default class Home extends Component {
   }
 
   render() {
-    const {isOpened, content} = this.state;
+    const {isOpened, content, detailVisible, airdetail} = this.state;
     return (
-      <View className="home-page">
-        <MainPage />
+      <View className={classnames("home-page")}>
+        <MainPage detailVisible={this.showDetailVisible} />
         <Detail />
         <Myslider />
         <Graph />
@@ -57,6 +80,7 @@ export default class Home extends Component {
           </AtModalContent>
           <AtModalAction> <Button onClick={this.closeModal}>我知道了</Button> </AtModalAction>
         </AtModal>
+        <Airdetail visible={detailVisible} data={airdetail} onclose={this.onclose}/>
       </View>
     )
   }

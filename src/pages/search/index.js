@@ -1,8 +1,8 @@
-import Taro, { Component } from '@tarojs/taro'
-import {View, Text} from '@tarojs/components'
-import SearchBar from '../../components/index';
-import CityList from '../../components/city-list/index';
-import { AtTag } from 'taro-ui'
+import Taro, { Component } from '@tarojs/taro';
+import {View, Text} from '@tarojs/components';
+import SearchBar from '../../components/searchbar/SearchBar';
+import Tag from '../../components/tag/Tag';
+import './index.scss';
 
 export default class Search extends Component {
   constructor(props) {
@@ -11,6 +11,18 @@ export default class Search extends Component {
       text: 'hello',
       type: 'his',
       currentList: [{
+        name: 'xian'
+      },{
+        name: 'xian'
+      },{
+        name: 'xian'
+      },{
+        name: 'xian'
+      },{
+        name: 'xian'
+      },{
+        name: 'xian'
+      },{
         name: 'xian'
       }],
       historyList: [{
@@ -29,77 +41,66 @@ export default class Search extends Component {
     navigationBarTitleText: '搜索'
   }
 
-  getListData = (val) => {
-    console.log(val)
-  }
-
-  onToggle = (type) => {
-    console.log(type);
+  textChange = (val) => {
     this.setState({
-      type,
+      text: val
     })
   }
 
-  onSelect = (name, location) => {
-    console.log(name, location)
+  cancelHandler = () => {
+    Taro.redirectTo({
+      url: '/pages/home/index'
+    })
   }
 
   render() {
-    let {cityList, historyList, currentList, sceneList, type} = this.state;
+    let {text, type, currentList, historyList, cityList, sceneList} = this.state;
     return (
-      <View className="search">
+      <View>
         <SearchBar
-          onChange={this.getListData}
-          onFocus={this.onToggle}
+          val={text}
+          onChange={this.textChange}
+          cancelHandler={this.cancelHandler}
         />
-        {
-          type == 'list' && (
-            <View className="search-list">
-              <CityList 
-                onSelect={this.onSelect}
-              />
-            </View>
-          )
-        }
         {
           type == 'his' && (
             <View className="search-his">
-              <View className="search-his__cur">
+              <View className="search-his__item">
                 <Text className="search-title">当前定位</Text>
                 <View className="search-title__list">
                   {
                     historyList.map((item, index) => {
-                      <AtTag key={index}>{item.name}</AtTag>
+                      return <Tag key={`${item.name}-${index}`}>{item.name}</Tag>
                     })
                   }
                 </View>
               </View>
-              <View className="search-his__history">
+              <View className="search-his__item">
                 <Text className="search-title">历史记录</Text>
                 <View className="search-title__list">
                   {
                     currentList.map((item, index) => {
-                      <AtTag key={index}>{item.name}</AtTag>
+                      return <Tag key={`${item.name}-${index}`}>{item.name}</Tag>
                     })
                   }
                 </View>
               </View>
-              <View className="search-his__hot-city">
+              <View className="search-his__item">
                 <Text className="search-title">热门城市</Text>
                 <View className="search-title__list">
                   {
                     cityList.map((item, index) => {
-                      <AtTag key={index}>{item.name}</AtTag>
+                      return <Tag key={`${item.name}-${index}`}>{item.name}</Tag>
                     })
                   }
                 </View>
               </View>
-              <View className="search-his__hot-scene">
+              <View className="search-his__item">
                 <Text className="search-title">热门景区</Text>
                 <View className="search-title__list">
                   {
                     sceneList.map((item, index) => {
-                      <AtTag key={index}>{item.name}</AtTag>
+                      return <Tag key={`${item.name}-${index}`}>{item.name}</Tag>
                     })
                   }
                 </View>

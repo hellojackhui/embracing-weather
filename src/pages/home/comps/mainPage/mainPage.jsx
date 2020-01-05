@@ -13,7 +13,6 @@ export default class MainPage extends Component {
         weatherData: {},
         airData: {},
         setting: false,
-        detailVisible: false,
       }
     }
     componentDidMount() {
@@ -81,8 +80,12 @@ export default class MainPage extends Component {
     }
 
     showAirDetail = () => {
-      this.setState({
-        detailVisible: true,
+      this.props.detailVisible()
+    }
+
+    toSearch = () => {
+      Taro.navigateTo({
+        url: '/pages/search/index'
       })
     }
 
@@ -97,7 +100,7 @@ export default class MainPage extends Component {
             backgroundImage: `url("${img}")`
         }}>
           <View className='main-page__topbar'>
-            <View className='main-page__location'>
+            <View className='main-page__location' onClick={this.toSearch}>
                 <View className='main-page__locicon'></View>
                 <Text className='main-page__loctext'>{weatherData.basic.location}</Text>
             </View>

@@ -1,6 +1,8 @@
 import Taro, {Component} from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
-
+import classnames from 'classnames';
+import closeicon from '../../assets/icons/close.png';
+import detailimg from '../../assets/image/3.jpg';
 
 class AirDetail extends Component {
   constructor(props) {
@@ -10,15 +12,33 @@ class AirDetail extends Component {
     }
   }
 
+  componentWillReceiveProps(nextprops) {
+    console.log(nextprops)
+    this.setState({
+      visible: nextprops.visible
+    })
+  }
+
+  onclose = () => {
+    let {onclose} = this.props;
+    onclose && onclose();
+  }
+
   render() {
     let {data} = this.props;
+    let {visible} = this.state;
     let {air_now_station} = data;
     return (
-      <View className="air-detail">
-        <View className="air-detail-wrap">
+      <View className={classnames('air-detail', {
+        'is-shadow': visible
+      })} >
+        <View className={classnames("air-detail-wrap", {
+          'is-visible': visible
+        })}>
             <View className="air-detail-container">
               <View className="air-detail-top">
-                <View className="air-detail-top__del"></View>
+                <Image className="air-detail-top__img" src={detailimg} mode="scaleToFill" />
+                <Image className="air-detail-top__del" src={closeicon} onClick={this.onclose}/>
                 <View className="air-detail-top__wrap">
                   <Text className="air-detail-top__title">空气质量指数</Text>
                   <Text className="air-detail-top__num">41</Text>
@@ -56,5 +76,20 @@ class AirDetail extends Component {
       </View>
     )
   }
-
 }
+
+AirDetail.defaultProps = {
+  data: {
+    air_now_station: {
+      pm10: '',
+      pm25: '',
+      no2: '',
+      so2: '',
+      co: '',
+      o3: '',
+    }
+  },
+  visible: false,
+}
+
+export default AirDetail;

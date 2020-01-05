@@ -1,0 +1,123 @@
+.air-detail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  opacity: 0;
+  transition: all .3s linear;
+  &-wrap {
+    position: absolute;
+    top: 35vh;
+    left: 20vw;
+    width: 60vw;
+    height: 60vh;
+    transition: all .4s linear;
+    opacity: 0;
+    z-index: -1;
+  }
+  &-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  &-top {
+    position: relative;
+    width: 100%;
+    height: 60%;
+    &__del {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      width: 40px;
+      height: 40px;
+    }
+    &__img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    &__wrap {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+    &__title {
+      font-size: 24px;
+    }
+    &__num {
+      font-size: 80px;
+    }
+    &__type {
+      padding: 10px 20px;
+      background-color: #eed778;
+      border-radius: 10px;
+    }
+  }
+  &-bottom {
+    width: 100%;
+    height: 40%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas: "a b c", "d e f", "g h i";
+    &__item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      border-right: 1px solid #dddddd;
+      border-bottom: 1px solid #dddddd;
+
+    }
+    &__item:nth-of-type(1) {
+       grid-area: 'a';
+    }
+    &__item:nth-of-type(2) {
+       grid-area: 'b';
+    }
+    &__item:nth-of-type(3) {
+       grid-area: 'c';
+    }
+    &__item:nth-of-type(4) {
+       grid-area: 'd';
+    }
+    &__item:nth-of-type(5) {
+       grid-area: 'e';
+    }
+    &__item:nth-of-type(6) {
+       grid-area: 'f';
+    }
+    &__item:nth-of-type(7) {
+       grid-area: 'g';
+    }
+    &__item:nth-of-type(8) {
+      grid-area: 'h';
+    }
+    &__item:nth-of-type(9) {
+       grid-area: 'i';
+    }
+  }
+  .is-visible {
+    top: 25vh;
+    opacity: 1;
+    background-color: white;
+    z-index: 10;
+  }
+}
+.is-shadow {
+  opacity: 1;
+  background-color: rgba($color: #000000, $alpha: .2);
+  z-index: 5;
+}

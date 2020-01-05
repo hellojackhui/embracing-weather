@@ -21,8 +21,8 @@ class App extends Component {
   config = {
     pages: [
       // 'pages/comps/index',
-      // 'pages/search/index',
       'pages/home/index',
+      'pages/search/index',
       'pages/about/index',
     ],
     window: {
