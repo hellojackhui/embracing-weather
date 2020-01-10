@@ -29,7 +29,7 @@ const post = (url = '', params = {}) => {
   })
 }
 
-export default {
+export {
   get,
   post,
 }

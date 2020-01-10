@@ -9,4 +9,6 @@ class Api {
   static lifestyle = 'https://free-api.heweather.net/s6/weather/lifestyle';
   // 空气质量实况
   static nowAirquality = 'https://free-api.heweather.net/s6/air/now';
+  // 和风天气key
+  static heweatherkey = 'ddad90bf7c654beb8e508cfa0a275010';
 }
