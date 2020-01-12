@@ -1,8 +1,6 @@
 import Taro, {Component} from '@tarojs/taro';
-import HttpUtils from '../../../../utils/httpUtils';
-import Toast from '../../../../utils/tools'
-import {heweatherNowUrl, heweatherAirUrl ,heweatherkey} from '../../../../config/index'
-import { View, Swiper, SwiperItem } from '@tarojs/components';
+import { View, Swiper, SwiperItem} from '@tarojs/components';
+import classnames from 'classnames';
 import img from '../../../../assets/image/3.jpg'
 import './mainPage.scss'
 
@@ -13,84 +11,66 @@ export default class MainPage extends Component {
         weatherData: {},
         airData: {},
         setting: false,
+        optionsVisible: false,
       }
     }
     componentDidMount() {
-      this.getLocation().then((location) => {
-        this.getWeatherData(location)
-      }).catch((err) => {
-        Toast.show('none', 2000, err);
+    }
+
+    componentWillReceiveProps(nextProps) {
+      this.setState({
+        weatherData: nextProps.weatherData,
+        airData: nextProps.airData,
       })
     }
 
-    getLocation = () => {
-      return new Promise((resolve, reject) => {
-        Taro.getLocation({
-          type: 'wgs84'
-        }).then((res) => {
-          resolve(`${res.longitude},${res.latitude}`)
-        }).catch((res) => {
-          reject('获取地理位置失败')
-        })
-      })
-    }
-
-    getWeatherData = (location) => {
-      return Promise.all([
-        this.getNowWeatherData(location),
-        this.getAirData(location)
-      ]).then(([weatherData, airData]) => {
-        this.setState({
-          weatherData,
-          airData,
-        })
-      })
-    }
-
-    getNowWeatherData = (location = 'beijing') => {
-      return new Promise((resolve, reject) => {
-        return HttpUtils.get(`${heweatherNowUrl}`, {
-          location,
-          key: heweatherkey,
-        }).then((res) => {
-          resolve(res['HeWeather6'][0]);
-        }).catch((err) => {
-          reject('获取实时天气数据有误');
-        }) 
-      })
-    }
-
-    getAirData = (location = 'beijing') => {
-      return new Promise((resolve, reject) => {
-        HttpUtils.get(`${heweatherAirUrl}`, {
-          location,
-          key: heweatherkey,
-        }).then((res) => {
-          resolve(res['HeWeather6'][0]);
-        }).catch((err) => {
-          reject('获取实时天气数据有误');
-        })
-      })
-    }
-
+    // 跳转到关于页面
     goAboutPage = () => {
       Taro.navigateTo({
         url: '/pages/about/index'
       })
     }
 
+    // 触发截屏分享
+    getScreenShot = () => {
+      Taro.showLoading({
+        title: '加载中'
+      });
+      this.props.billHandler();
+    }
+
+    // 切换设置内容显示
+    toggleSettings = () => {
+      let {optionsVisible} = this.state;
+      this.setState({
+        optionsVisible: !optionsVisible,
+      })
+    }
+
+    // 显示空气质量详情
     showAirDetail = () => {
       this.props.detailVisible()
     }
 
+    // 跳转到搜索页面
     toSearch = () => {
       Taro.navigateTo({
         url: '/pages/search/index'
       })
     }
 
+    getFriendlyText = (data) => {
+      if (!Object.keys(data || {}).length) return;
+      if (data.tmp < 5) {
+        return `天有点冷，注意保暖～`;
+      }
+      if (tmp.cond_code == 100) {
+        return `你若安好，便是晴天～`;
+      }
+    }
+
     render() {
-      let {weatherData, airData, setting} = this.state
+      let {weatherData, airData, setting, optionsVisible} = this.state
       let nowdata = weatherData.now
       let detail = [];
       detail.push(`${nowdata && nowdata['wind_dir'] || '北风'} ${nowdata && nowdata['wind_sc'] || 0}级`)
@@ -104,7 +84,13 @@ export default class MainPage extends Component {
                 <View className='main-page__locicon'></View>
                 <Text className='main-page__loctext'>{weatherData.basic.location}</Text>
             </View>
-            <View className='main-page__seticon' onClick={this.goAboutPage}></View>
+            <View className='main-page__seticon' onClick={this.toggleSettings}></View>
+            <View className={classnames('main-page__settings', {
+              'is-visible': optionsVisible,
+            })}>
+              <View className='main-page__settings__item' onClick={this.goAboutPage}></View>
+              <View className='main-page__settings__item' onClick={this.getScreenShot}></View>
+            </View>
             {/* <View className='main-page__screenicon'></View> */}
             {
               setting && (
@@ -116,9 +102,9 @@ export default class MainPage extends Component {
             <Text className='main-page__airnum'>{airData.air_now_city.aqi}</Text>
             <Text className='main-page__airtext'>{airData.air_now_city.qlty}</Text>
           </View>
-          <View className='main-page__tips'>
+          {/* <View className='main-page__tips'>
             大雾预警
-          </View>
+          </View> */}
           <View className='main-page__data'>
             <Text className='main-page__temprature'>{weatherData.now.tmp}</Text>
             <Text className='main-page__weathertype'>{weatherData.now.cond_txt}</Text>
@@ -141,7 +127,7 @@ export default class MainPage extends Component {
               </Swiper>
             </View>
           </View>
-          <Text className='main-page__friendlytext'>hello</Text>
+          <Text className='main-page__friendlytext'>{this.getFriendlyText(nowdata)}</Text>
         </View>
       )
     }

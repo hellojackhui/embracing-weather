@@ -1,29 +1,36 @@
 import Taro, {Component} from '@tarojs/taro';
 import './slider.scss'
 import { View, Text, Image, ScrollView } from '@tarojs/components';
-import cloud from '../../../../assets/icons/duoyun.png';
+import {weatherIcons} from '../../../../utils/utils';
 import {mock} from '../../../../mock/mock';
 
 export default class Myslider extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.state = {
+      hourlyData: [],
+    }
   }
   componentDidMount() {
     
   }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      hourlyData: nextProps.data.hourly,
+    })
+  }
   render() {
-    let main = mock['HeWeather6'][0];
-    let graph = main['hourly'].slice(0,14);
+    const {hourlyData} = this.state;
     return (
       <View className="slider">
         <View className="slider-scrollview">
           {
-            graph.map((item, index) => {
+            hourlyData.map((item, index) => {
               return (
-                <View key={`${item.cloud}-${index}`} className="slider-scrollview__item" style={{height: '150px'}}>
-                  <Text className="slider-scrollview__time">{(item.time).substr(6)}</Text>
-                  <Image className="slider-scrollview__img" src={cloud}/>
-                  <Text className="slider-scrollview__title">{item.tmp}</Text>
+                <View key={`${item.cond_code}-${index}`} className="slider-scrollview__item" style={{height: '150px'}}>
+                  <Text className="slider-scrollview__time">{item.time}</Text>
+                  <Image className="slider-scrollview__img" src={weatherIcons(`${item.cond_code}`)}/>
+                  <Text className="slider-scrollview__title">{`${item.tmp}°`}</Text>
                 </View>
               )
             })

@@ -1,10 +1,8 @@
 import Taro, {Component} from '@tarojs/taro';
-import HttpUtils from '../../../../utils/httpUtils';
 import Toast from '../../../../utils/tools'
-import {heweatherForecastUrl, heweatherkey} from '../../../../config/index'
 import './detail.scss'
 import { View, Text, Image } from '@tarojs/components';
-import cloud from '../../../../assets/icons/duoyun.png';
+import {weatherIcons} from '../../../../utils/utils';
 
 export default class Detail extends Component {
   constructor(props) {
@@ -14,34 +12,13 @@ export default class Detail extends Component {
     }
   }  
   componentDidMount() {
-    this.getLocation().then((location) => {
-      this.getGridForcastData(location)
-    }).catch((err) => {
-      Toast.show('none', 2000, err);
-    })
+
   }  
-  getLocation = () => {
-    return new Promise((resolve, reject) => {
-      Taro.getLocation({
-        type: 'wgs84'
-      }).then((res) => {
-        resolve(`${res.longitude},${res.latitude}`)
-      }).catch((res) => {
-        reject('获取地理位置失败')
-      })
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      data: nextProps.data,
     })
-  }
-  getGridForcastData = (location) => {
-    return HttpUtils.get(`${heweatherForecastUrl}`, {
-      location,
-      key: heweatherkey,
-    }).then((res) => {
-      this.setState({
-        data: res['HeWeather6'][0],
-      })
-    }).catch((err) => {
-      reject('获取实时天气数据有误');
-    }) 
   }
 
   render() {
@@ -58,7 +35,7 @@ export default class Detail extends Component {
             </View>
             <View className="detail__item-bottom">
               <Text className="detail__item-left">{tomorrow['cond_txt_n'] == tomorrow['cond_txt_d'] ? `${tomorrow['cond_txt_n']}` : `${tomorrow['cond_txt_d']}转${tomorrow['cond_txt_n']}`}</Text>
-              <Image src={`${cloud}`} mode="aspectFit" style="width: 20px;height: 20px"/>
+              <Image src={weatherIcons(`${tomorrow.cond_code_d}`)} mode="aspectFit" style="width: 20px;height: 20px"/>
             </View>
           </View>
         </View>
@@ -70,7 +47,7 @@ export default class Detail extends Component {
             </View>
             <View className="detail__item-bottom">
               <Text className="detail__item-left">{aftertomorrow['cond_txt_n'] == aftertomorrow['cond_txt_d'] ? `${aftertomorrow['cond_txt_n']}` : `${aftertomorrow['cond_txt_d']}转${aftertomorrow['cond_txt_n']}`}</Text>
-              <Image src={`${cloud}`} mode="aspectFit" style="width: 20px;height: 20px"/>
+              <Image src={weatherIcons(`${aftertomorrow.cond_code_d}`)} mode="aspectFit" style="width: 20px;height: 20px"/>
             </View>
           </View>
         </View>

@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 75vh;
+  height: 80vh;
   &__topbar {
     position: relative;
     width: 100%;
@@ -38,6 +38,40 @@
     background-image: url('../../../../assets/icons/setting.png');
     background-size: cover;
     background-position: center;
+  }
+  &__settings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40px;
+    position: absolute;
+    right: 10px;
+    top: 70px;
+    height: 0;
+    opacity: 0;
+    transition: all .4s linear;
+    &__item {
+      width: 40px;
+      height: 40px;
+      margin: 10px 0px;
+      &:nth-of-type(1) {
+        background-image: url('../../../../assets/icons/about.png');
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      &:nth-of-type(2) {
+        background-image: url('../../../../assets/icons/image.png');
+        background-size: 30px 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
+  .is-visible {
+    height: 100px;
+    opacity: 1;
+    transform-origin: top center;
   }
   &__air {
     position: absolute;
@@ -83,7 +117,7 @@
     width: fit-content;
     height: fit-content;
     position: absolute;
-    top: 0;
+    top: -6vh;
     right: 0;
     bottom: 0;
     left: 0;
@@ -120,7 +154,7 @@
   }
   &__friendlytext {
     position: absolute;
-    top: 75%;
+    top: 70%;
     width: 100%;
     padding: 5px 3px;
     text-align: center;

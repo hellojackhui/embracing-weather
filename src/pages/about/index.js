@@ -2,7 +2,6 @@ import Taro, { Component } from '@tarojs/taro'
 import {View, Switch, Swiper, SwiperItem, Image} from '@tarojs/components'
 import './index.scss';
 import qrcode from '../../assets/about/qrcode.jpeg';
-import qqlogo from '../../assets/about/qqlogo.jpeg';
 import github from '../../assets/about/github.jpeg';
 import recommend from '../../assets/about/recommend.png';
 import email from '../../assets/icons/email.png';

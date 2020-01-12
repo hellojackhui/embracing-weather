@@ -11,7 +11,7 @@
     overflow-x: scroll;
     white-space: nowrap;
     &__item {
-      width: 120px;
+      width: 140px;
       height: 150px;
       display: flex;
       flex-direction: column;
@@ -32,8 +32,8 @@
       }
       &__img {
         display: inline-block;
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;

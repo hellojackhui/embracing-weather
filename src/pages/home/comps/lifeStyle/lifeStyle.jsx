@@ -10,41 +10,18 @@ export default class LifeStyle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {},
+      data: {
+        lifestyle: []
+      },
     }
   }
 
   componentDidMount() {
-    this.getLocation().then((location) => {
-      this.getLifeStyleData(location)
-    }).catch((err) => {
-      Toast.show('none', 2000, err);
-    })
   }
-
-  getLocation = () => {
-    return new Promise((resolve, reject) => {
-      Taro.getLocation({
-        type: 'wgs84'
-      }).then((res) => {
-        resolve(`${res.longitude},${res.latitude}`)
-      }).catch((res) => {
-        reject('获取地理位置失败')
-      })
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      data: nextProps.data,
     })
-  }
-
-  getLifeStyleData = (location) => {
-    return HttpUtils.get(`${heweatherLifestyleUrl}`, {
-      location,
-      key: heweatherkey,
-    }).then((res) => {
-      this.setState({
-        data: res['HeWeather6'][0],
-      })
-    }).catch((err) => {
-      reject('获取生活质量数据有误');
-    }) 
   }
 
   typeTotext = (type) => {
@@ -86,14 +63,14 @@ export default class LifeStyle extends Component {
 
   render() {
     let {data} = this.state;
-    let lifestyleData = Object.keys(data).length ? data['lifestyle'] : {}
+    let {lifestyle} = data;
     return (
       <View>
         {
-          Object.keys(data).length ? (
+          lifestyle.length ? (
             <View className="lifestyle-grid">
               {
-                lifestyleData.map((item, index) => {
+                lifestyle.map((item, index) => {
                   return (
                     <View key={`${item.type}-${index}`} className="lifestyle-grid__item" onClick={() =>this.detail(item)}>
                       <Image src={this.getImg(item.type)} mode="aspectFill" style="width: 30px;height: 30px;margin-bottom: 10px"/>

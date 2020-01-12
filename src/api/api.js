@@ -12,3 +12,5 @@ class Api {
   // 和风天气key
   static heweatherkey = 'ddad90bf7c654beb8e508cfa0a275010';
 }
+
+export default Api;

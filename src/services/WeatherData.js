@@ -1,4 +1,5 @@
 import {get} from '../utils/httpUtils';
+import Api from '../api/api';
 class WeatherDataService {
   static getAllData(params) {
     return new Promise((resolve, reject) => {
@@ -10,8 +11,8 @@ class WeatherDataService {
         return get(item, reqBody)
       })
       Promise.all(reqMap).then((data) => {
-        console.log(data);
-        resolve(data);
+        let formatData = data.map((item) => item.HeWeather6[0]);
+        resolve(formatData);
       }, (err) => {
         reject(err);
       })
