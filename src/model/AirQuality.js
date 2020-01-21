@@ -4,6 +4,7 @@ class AirQuaity  {
       this.air_now_station = data.air_now_station.map((item) => {
         return new AirNowStation(item);
       })
+      this.air_location = data.air_location || '';
     }
   }
 

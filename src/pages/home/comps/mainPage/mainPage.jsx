@@ -61,10 +61,11 @@ export default class MainPage extends Component {
 
     getFriendlyText = (data) => {
       if (!Object.keys(data || {}).length) return;
-      if (data.tmp < 5) {
+      console.log(data);
+      if (data.tmp <= 5) {
         return `天有点冷，注意保暖～`;
       }
-      if (tmp.cond_code == 100) {
+      if (data.cond_code == 100) {
         return `你若安好，便是晴天～`;
       }
     }
@@ -82,7 +83,7 @@ export default class MainPage extends Component {
           <View className='main-page__topbar'>
             <View className='main-page__location' onClick={this.toSearch}>
                 <View className='main-page__locicon'></View>
-                <Text className='main-page__loctext'>{weatherData.basic.location}</Text>
+                <Text className='main-page__loctext'>{`${airData.air_location}`}</Text>
             </View>
             <View className='main-page__seticon' onClick={this.toggleSettings}></View>
             <View className={classnames('main-page__settings', {

@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import {View, Text} from '@tarojs/components'
+import {View, Text, Image} from '@tarojs/components'
 import classnames from 'classnames';
 import './Tag.scss';
 
@@ -12,20 +12,28 @@ class Tag extends Component {
     }
   }
 
-  toggleclick = () => {
+  toggleclick = (value) => {
     let active = this.state.active;
-    this.setState({
-      active: !active
-    })
+    // this.setState({
+    //   active: !active
+    // })
+    if (this.props.onClick) [
+      this.props.onClick(value)
+    ]
   }
 
   render() {
     let {active} = this.state;
-    const {text, children, key} = this.props;
+    const {text, children, key, icon, value} = this.props;
     return (
       <View className={classnames('comps-tag', {
-        'comps-tag--active': active
-      })} onClick={this.toggleclick} key={key}>
+        'comps-tag--active': active,
+      })}  onClick={() => this.toggleclick(value)} key={key}>
+        {
+          icon != null && (
+            <Image style={{'width': '20px', 'height': '20px'}} src={require(`../../assets/icons/location.png`)}></Image>
+          )
+        }
         {text || children}
       </View>
     )

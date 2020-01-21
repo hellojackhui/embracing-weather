@@ -36,9 +36,18 @@ export default class Home extends Component {
     }
   }
   componentDidMount() {
-    this.getLocation().then((cord) => {
-      this.getForcastData(cord)
-    })
+    if (Object.keys(this.$router.params).length > 0) {
+      let value = this.$router.params.citycode;
+      let location = this.$router.params.location;
+      let isDetail = this.$router.params.isDetail === 'true';
+      this.getCurQuality(location, isDetail)
+      this.getForcastData(location)
+    } else {
+      this.getLocation().then((cord) => {
+        this.getCurQuality(cord, true)
+        this.getForcastData(cord)
+      })
+    }
   }
   getLocation = () => {
     return new Promise((resolve, reject) => {
@@ -61,15 +70,29 @@ export default class Home extends Component {
       let weekData = new Model.WeekWeather(res[1]);
       let hourlyData = new Model.HourlyWeather(res[2]);
       let lifeStyleData = new Model.LifeStyle(res[3]);
-      let airData= new Model.AirQuality(res[4]);
       this.setState({
         weatherData,
         weekData,
         hourlyData,
         lifeStyleData,
-        airData,
       })
     });
+  }
+
+  getCurQuality = (cord, isDetail) => {
+    return WeatherDataService.getCurLocation(cord).then((obj) => {
+      let params = {
+        location: obj.str,
+      }
+      return WeatherDataService.getAirQuality(params).then((res) => {
+        let airData = new Model.AirQuality(res[0]);
+        airData['air_location'] = isDetail ? obj.locationName : obj.locationName.split(' ')[0];
+        console.log(airData);
+        this.setState({
+          airData,
+        })
+      });
+    })
   }
 
   showDetailVisible = (data) => {
@@ -99,7 +122,6 @@ export default class Home extends Component {
 
   genBill = () => {
     Taro.getSystemInfo().then((res) => {
-      console.log(res);
       this.setState({
         screenWidth: res.screenWidth,
         screenHeight: res.screenHeight,
@@ -123,7 +145,6 @@ export default class Home extends Component {
   // 将需要保存的页面写入canvas
   drawScreen = () => {
     const {screenWidth, screenHeight, dpr, weatherData, airData} = this.state;
-    console.log(weatherData);
     const canvasCtx = Taro.createCanvasContext('shareCanvas', this.$scope);
     // 设置背景
     canvasCtx.setFillStyle('#ffffff');
@@ -215,7 +236,6 @@ export default class Home extends Component {
               return resolve();
             },
             fail: function() {
-              console.log('setting end')
               Taro.hideLoading();
               Taro.showToast({
                 title: `授权失败`,
