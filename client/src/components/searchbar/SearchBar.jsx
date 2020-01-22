@@ -36,7 +36,7 @@ class SearchBar extends Component {
               className="comps-search-bar__input"
               value={text}
               ref={(ref) => this.inputref = ref}
-              onChange={this.onChangeHandler}
+              onInput={this.onChangeHandler}
               placeholder={placeholder}
             />
           </View>

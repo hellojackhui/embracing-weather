@@ -1,13 +1,18 @@
 {
-  "miniprogramRoot": "./dist",
-  "projectname": "embracing-weather",
-  "description": "万象天气小程序-React",
-  "appid": "touristappid",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "postcss": false,
-    "minified": false
-  },
-  "compileType": "miniprogram"
+	"miniprogramRoot": "client/dist/",
+	"projectname": "embracing-weather",
+	"description": "万象天气小程序-React",
+	"cloudfunctionRoot": "cloud/functions/",
+	"appid": "wxcec2d4c37d16ee62",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+	"condition": {}
 }

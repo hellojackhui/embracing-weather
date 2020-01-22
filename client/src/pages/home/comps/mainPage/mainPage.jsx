@@ -90,7 +90,7 @@ export default class MainPage extends Component {
               'is-visible': optionsVisible,
             })}>
               <View className='main-page__settings__item' onClick={this.goAboutPage}></View>
-              <View className='main-page__settings__item' onClick={this.getScreenShot}></View>
+              {/* <View className='main-page__settings__item' onClick={this.getScreenShot}></View> */}
             </View>
             {/* <View className='main-page__screenicon'></View> */}
             {

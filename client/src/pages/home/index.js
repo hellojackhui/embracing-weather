@@ -49,6 +49,21 @@ export default class Home extends Component {
       })
     }
   }
+  config = {
+    enablePullDownRefresh: true,
+    backgroundTextStyle: 'dark',
+  }
+
+  onPullDownRefresh = () => {
+    this.getLocation().then((cord) => {
+      Promise.all([this.getCurQuality(cord, true), this.getForcastData(cord)])
+    }).then(() => {
+      setTimeout(() => {
+        Taro.stopPullDownRefresh();
+      }, 1000)
+    })
+  }
+
   getLocation = () => {
     return new Promise((resolve, reject) => {
       Taro.getLocation({
@@ -62,36 +77,41 @@ export default class Home extends Component {
   }
 
   getForcastData = (location) => {
-    let params = {
-      location,
-    }
-    return WeatherDataService.getAllData(params).then((res) => {
-      let weatherData = new Model.NowWeather(res[0]);
-      let weekData = new Model.WeekWeather(res[1]);
-      let hourlyData = new Model.HourlyWeather(res[2]);
-      let lifeStyleData = new Model.LifeStyle(res[3]);
-      this.setState({
-        weatherData,
-        weekData,
-        hourlyData,
-        lifeStyleData,
-      })
-    });
+    return new Promise((resolve, reject) => {
+      let params = {
+        location,
+      }
+      WeatherDataService.getAllData(params).then((res) => {
+        let weatherData = new Model.NowWeather(res[0]);
+        let weekData = new Model.WeekWeather(res[1]);
+        let hourlyData = new Model.HourlyWeather(res[2]);
+        let lifeStyleData = new Model.LifeStyle(res[3]);
+        resolve();
+        this.setState({
+          weatherData,
+          weekData,
+          hourlyData,
+          lifeStyleData,
+        })
+      });
+    })
   }
 
   getCurQuality = (cord, isDetail) => {
-    return WeatherDataService.getCurLocation(cord).then((obj) => {
-      let params = {
-        location: obj.str,
-      }
-      return WeatherDataService.getAirQuality(params).then((res) => {
-        let airData = new Model.AirQuality(res[0]);
-        airData['air_location'] = isDetail ? obj.locationName : obj.locationName.split(' ')[0];
-        console.log(airData);
-        this.setState({
-          airData,
-        })
-      });
+    return new Promise((resolve, reject) => {
+      WeatherDataService.getCurLocation(cord).then((obj) => {
+        let params = {
+          location: obj.str,
+        }
+        return WeatherDataService.getAirQuality(params).then((res) => {
+          let airData = new Model.AirQuality(res[0]);
+          airData['air_location'] = isDetail ? obj.locationName : obj.locationName.split(' ')[0];
+          resolve();
+          this.setState({
+            airData,
+          })
+        });
+      })
     })
   }
 
@@ -127,7 +147,7 @@ export default class Home extends Component {
         screenHeight: res.screenHeight,
         dpr: res.devicePixelRatio,
       }, () => {
-        this.drawScreen();
+        // this.drawScreen();
       })
     })
   }
