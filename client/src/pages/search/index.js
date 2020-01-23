@@ -49,7 +49,7 @@ export default class Search extends Component {
   genListData = (list) => {
     let {data} = list;
     let {text} = this.state;
-    let searchList = data.map((item) => {
+    let searchList = data.data.map((item) => {
       return {
         fullName: item.City_CN === item["Admin_ district_CN"] ? `${item.Province_CN}，${item.City_CN}` : `${item.Province_CN}，${item["Admin_ district_CN"]}，${item.City_CN}`,
         name: `${item.City_CN}`,
