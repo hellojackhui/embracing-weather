@@ -8,6 +8,10 @@ const getStorage = (key) => {
   return Taro.getStorageSync(key);
 }
 
+const cleanStorage = (key) => {
+  return Taro.removeStorageSync(key);
+} 
+
 const store = (type, value) => {
   let arr = getStorage(type) ? JSON.parse(getStorage(type)) : [];
   let nameList = arr.map((item) => item.name);
@@ -26,5 +30,6 @@ const store = (type, value) => {
 export {
   setStorage,
   getStorage,
+  cleanStorage,
   store,
 }

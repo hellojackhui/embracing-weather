@@ -1,11 +1,12 @@
 import Taro, { Component } from '@tarojs/taro';
-import {View, Text} from '@tarojs/components';
+import {View, Text, Image} from '@tarojs/components';
 import SearchBar from '../../components/searchbar/SearchBar';
 import {cityList} from './cityCodes';
 import Tag from '../../components/tag/Tag';
-import { store, getStorage } from '../../utils/storage';
+import { store, getStorage, cleanStorage } from '../../utils/storage';
 import {debounce} from '../../utils/tools';
 import WeatherDataService from '../../services/WeatherData';
+import trash from '../../assets/icons/trash.png';
 import './index.scss';
 
 export default class Search extends Component {
@@ -20,7 +21,7 @@ export default class Search extends Component {
       sceneList: [],
       searchList: [],
     }
-    this.debounce = debounce(this.setrequest, 300, true)
+    this.debounce = debounce(this.setrequest, 300, false)
   }
 
   config = {
@@ -28,6 +29,9 @@ export default class Search extends Component {
   }
 
   setrequest = (val) => {
+    Taro.showLoading({
+      title: '搜索中'
+    })
     // request;
     Taro.cloud.callFunction({
       "name": "cityQuery",
@@ -47,41 +51,30 @@ export default class Search extends Component {
     let {text} = this.state;
     let searchList = data.map((item) => {
       return {
-        name: item.City_CN === item["Admin_ district_CN"] ? `${item.Province_CN}-${item.City_CN}` : `${item.Province_CN}-${item["Admin_ district_CN"]}-${item.City_CN}`,
+        fullName: item.City_CN === item["Admin_ district_CN"] ? `${item.Province_CN}，${item.City_CN}` : `${item.Province_CN}，${item["Admin_ district_CN"]}，${item.City_CN}`,
+        name: `${item.City_CN}`,
         value: item.City_ID,
         location: `${item.Longitude},${item.Latitude}`,
-        type: '0',
+        type: item.City_CN === item["Admin_ district_CN"] ? '1' : '0',
       }
     })
     searchList = searchList.map((item) => {
       return {
         ...item,
-        startIndex: item.name.indexOf(text),
+        startIndex: item.fullName.indexOf(text),
       }
     })
-    console.log(searchList);
+    Taro.hideLoading();
     this.setState({
       searchList
     })
   }
 
-  // listRender = () => {
-  //   let {searchList, text} = this.state;
-  //   let renderList = searchList.map((item) => {
-  //     let endIndex = startIndex + text.length;
-  //     return (
-  //       <View className="search-list__item">
-  //         <Text>{`${item.name.substr(0, item.startIndex)}`}</Text><Text>{`${item.name.substr(item.startIndex, endIndex)}`}</Text><Text>{`${item.name.substr(endIndex, item.name.length)}`}</Text>
-  //       </View>
-  //     )
-  //   })
-  //   return renderList;
-  // }
-
   textChange = (val) => {
     this.setState({
       text: val,
       type: (val == null || val === '') ? 'his' : 'list',
+      searchList: [],
     },() => {
       this.debounce(val)
     })
@@ -106,9 +99,16 @@ export default class Search extends Component {
     })
   }
 
+  cleanHistory = () => {
+    this.setState({
+      historyList: []
+    }, () => {
+      cleanStorage('history')
+    })
+  }
+
   getCurrentList = (cord) => {
     return WeatherDataService.getCurLocation(cord).then((obj) => {
-      console.log(cord);
       let data = {
         name: `${obj.locationName.split(' ')[1]}`,
         value: `${obj.str}`,
@@ -149,8 +149,8 @@ export default class Search extends Component {
     const listRender = searchList.map((item, index) => {
       let endIndex = item.startIndex + text.length;
       return (
-        <View className="search-list__item" key={`${item.name}-${index}`}>
-          <Text>{`${item.name.substring(0, item.startIndex)}`}</Text><Text>{`${item.name.substring(item.startIndex, endIndex)}`}</Text><Text>{`${item.name.substring(endIndex, item.name.length+1)}`}</Text>
+        <View className="search-list__item" key={`${item.fullName}-${index}`} onClick={() => this.select(item)}>
+          <Text className="search-list__txt">{`${item.fullName.substring(0, item.startIndex)}`}</Text><Text className="search-list__txt--bold">{`${item.fullName.substring(item.startIndex, endIndex)}`}</Text><Text className="search-list__txt">{`${item.fullName.substring(endIndex, item.fullName.length+1)}`}</Text>
         </View>
       )
     })
@@ -179,6 +179,11 @@ export default class Search extends Component {
                 historyList.length > 0 && (
                   <View className="search-his__item">
                     <Text className="search-title">历史记录</Text>
+                    {
+                      historyList.length > 0 && (
+                        <Image class="search-title__icon" src={trash} onClick={this.cleanHistory}/>
+                      )
+                    }
                     <View className="search-title__list">
                     {
                       historyList.map((item, index) => {
@@ -222,6 +227,11 @@ export default class Search extends Component {
             <View className="search-list">
               {
                 listRender
+              }
+              {
+                searchList.length == 0 && (
+                  <View className="search-list__tip">抱歉，未搜索到相关位置</View>
+                )
               }
             </View>
           )

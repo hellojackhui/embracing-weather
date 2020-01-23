@@ -51,7 +51,7 @@ class SearchBar extends Component {
 
 SearchBar.defaultProps = {
   cancelText: '取消',
-  placeholder: '请输入',
+  placeholder: '请输入市，区，县等',
   onChange: () => {},
 }
 

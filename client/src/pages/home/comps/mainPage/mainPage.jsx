@@ -61,7 +61,6 @@ export default class MainPage extends Component {
 
     getFriendlyText = (data) => {
       if (!Object.keys(data || {}).length) return;
-      console.log(data);
       if (data.tmp <= 5) {
         return `天有点冷，注意保暖～`;
       }
@@ -81,10 +80,14 @@ export default class MainPage extends Component {
             backgroundImage: `url("${img}")`
         }}>
           <View className='main-page__topbar'>
-            <View className='main-page__location' onClick={this.toSearch}>
-                <View className='main-page__locicon'></View>
-                <Text className='main-page__loctext'>{`${airData.air_location}`}</Text>
-            </View>
+            {
+              airData.air_location !== undefined && (
+                <View className='main-page__location' onClick={this.toSearch}>
+                  <View className='main-page__locicon'></View>
+                  <Text className='main-page__loctext'>{`${airData.air_location}`}</Text>
+                </View>
+              )
+            }
             <View className='main-page__seticon' onClick={this.toggleSettings}></View>
             <View className={classnames('main-page__settings', {
               'is-visible': optionsVisible,
@@ -99,35 +102,43 @@ export default class MainPage extends Component {
               )
             }
           </View>
-          <View className='main-page__air' onTouchStart={this.showAirDetail}>
-            <Text className='main-page__airnum'>{airData.air_now_city.aqi}</Text>
-            <Text className='main-page__airtext'>{airData.air_now_city.qlty}</Text>
-          </View>
+          {
+            airData.air_now_city != undefined && (
+              <View className='main-page__air' onTouchStart={this.showAirDetail}>
+                <Text className='main-page__airnum'>{airData.air_now_city.aqi}</Text>
+                <Text className='main-page__airtext'>{airData.air_now_city.qlty}</Text>
+              </View>
+            )
+          }
           {/* <View className='main-page__tips'>
             大雾预警
           </View> */}
-          <View className='main-page__data'>
-            <Text className='main-page__temprature'>{weatherData.now.tmp}</Text>
-            <Text className='main-page__weathertype'>{weatherData.now.cond_txt}</Text>
-            <View className='main-page__detailinfo'>
-              <Swiper
-                className='main-page__detailinfo'
-                vertical
-                autoplay
-                circular
-              >
-                {
-                  detail.map((item, index) => {
-                    return (
-                      <SwiperItem key={index}>
-                        <View className="main-page__detailItem">{item}</View>
-                      </SwiperItem>
-                    )
-                  })
-                }
-              </Swiper>
-            </View>
-          </View>
+          {
+            weatherData.now != undefined && (
+              <View className='main-page__data'>
+                <Text className='main-page__temprature'>{weatherData.now.tmp}</Text>
+                <Text className='main-page__weathertype'>{weatherData.now.cond_txt}</Text>
+                <View className='main-page__detailinfo'>
+                  <Swiper
+                    className='main-page__detailinfo'
+                    vertical
+                    autoplay
+                    circular
+                  >
+                    {
+                      detail.map((item, index) => {
+                        return (
+                          <SwiperItem key={index}>
+                            <View className="main-page__detailItem">{item}</View>
+                          </SwiperItem>
+                        )
+                      })
+                    }
+                  </Swiper>
+                </View>
+              </View>
+            )
+          }
           <Text className='main-page__friendlytext'>{this.getFriendlyText(nowdata)}</Text>
         </View>
       )

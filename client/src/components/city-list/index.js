@@ -12,7 +12,6 @@ export default class CityList extends Component {
   }
 
   onScroll = (e) => {
-    console.log(e)
   }
 
   select = ({name, location}) => {

@@ -105,7 +105,7 @@ export default class Home extends Component {
         }
         return WeatherDataService.getAirQuality(params).then((res) => {
           let airData = new Model.AirQuality(res[0]);
-          airData['air_location'] = isDetail ? obj.locationName : obj.locationName.split(' ')[0];
+          airData['air_location'] = isDetail ? obj.locationName : `${obj.province} ${obj.locationName.split(' ')[0]}`;
           resolve();
           this.setState({
             airData,

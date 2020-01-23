@@ -8,12 +8,10 @@ export default class Modal extends Component {
       super(props);
     }
     render() {
-      console.log(this.props)
       let class1 = classNames('modal-bg', {
         'is-visible': this.props.visible,
         'is-hide': this.props.visible
       })
-      console.log(class1)
       const {content, visible} = this.props
       return (
         <View className={class1}>

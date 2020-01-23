@@ -15,11 +15,9 @@ export default class Comps extends Component {
   }
 
   getListData = () => {
-    console.log('getListData')
   }
 
   onToggle = (type) => {
-    console.log(type);
     this.setState({
       type,
     })

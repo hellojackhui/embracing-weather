@@ -6,7 +6,6 @@ class WeekWeather {
   }
   static fromJson(data) {
     this.daily_forecast = data.daily_forecast.map((item) => {
-      console.log()
       return new DailyForecast(item);
     });
   }
